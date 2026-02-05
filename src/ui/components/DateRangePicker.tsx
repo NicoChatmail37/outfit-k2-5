@@ -25,14 +25,18 @@ export function DateRangePicker({
     className,
 }: DateRangePickerProps) {
     const today = new Date().toISOString().split('T')[0];
+    const startId = `date-start-${label.toLowerCase().replace(/\s+/g, '-')}`;
+    const endId = `date-end-${label.toLowerCase().replace(/\s+/g, '-')}`;
 
     return (
         <div className={cn('w-full', className)}>
             {label && <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-xs text-gray-500 mb-1">Début</label>
+                    <label htmlFor={startId} className="block text-xs text-gray-500 mb-1">Début</label>
                     <input
+                        id={startId}
+                        name="dateStart"
                         type="date"
                         value={startDate}
                         min={today}
@@ -41,8 +45,10 @@ export function DateRangePicker({
                     />
                 </div>
                 <div>
-                    <label className="block text-xs text-gray-500 mb-1">Fin</label>
+                    <label htmlFor={endId} className="block text-xs text-gray-500 mb-1">Fin</label>
                     <input
+                        id={endId}
+                        name="dateEnd"
                         type="date"
                         value={endDate}
                         min={startDate || today}

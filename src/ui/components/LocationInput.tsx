@@ -38,6 +38,7 @@ export function LocationInput({
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const id = `location-input-${label.toLowerCase().replace(/\s+/g, '-')}`;
 
     const handleInputChange = useCallback((input: string) => {
         onChange(input);
@@ -60,10 +61,16 @@ export function LocationInput({
 
     return (
         <div className={cn('w-full relative', className)}>
-            {label && <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
+            {label && (
+                <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+                    {label}
+                </label>
+            )}
             <input
                 ref={inputRef}
+                id={id}
                 type="text"
+                name="location"
                 value={value}
                 onChange={(e) => handleInputChange(e.target.value)}
                 onFocus={() => value.length > 1 && setShowSuggestions(true)}

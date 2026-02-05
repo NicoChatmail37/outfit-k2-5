@@ -20,10 +20,12 @@ interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'
 
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     ({ label, min, max, value, onChange, showValue = true, valueFormatter, className, ...props }, ref) => {
+        const id = `slider-${label.toLowerCase().replace(/\s+/g, '-')}`;
+
         return (
             <div className={cn('w-full', className)}>
                 <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-medium text-gray-700">{label}</label>
+                    <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
                     {showValue && (
                         <span className="text-sm font-semibold text-blue-600">
                             {valueFormatter ? valueFormatter(value) : value}
@@ -32,6 +34,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
                 </div>
                 <input
                     ref={ref}
+                    id={id}
                     type="range"
                     min={min}
                     max={max}
