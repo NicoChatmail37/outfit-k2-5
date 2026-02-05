@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { OpenWeatherAdapter } from '../../../../infra/weather/OpenWeatherAdapter';
-import { OpenWeatherGeoAdapter } from '../../../../infra/geo/OpenWeatherGeoAdapter';
+import { OpenMeteoAdapter } from '../../../../infra/weather/OpenMeteoAdapter';
+import { OpenMeteoGeoAdapter } from '../../../../infra/geo/OpenMeteoGeoAdapter';
 
 const querySchema = z.object({
     q: z.string().min(1),
@@ -18,10 +18,10 @@ export async function GET(request: NextRequest) {
             end: searchParams.get('end') || undefined,
         });
 
-        const geoAdapter = new OpenWeatherGeoAdapter();
+        const geoAdapter = new OpenMeteoGeoAdapter();
         const location = await geoAdapter.geocode(query.q);
 
-        const weatherAdapter = new OpenWeatherAdapter();
+        const weatherAdapter = new OpenMeteoAdapter();
         const start = query.start ? new Date(query.start) : new Date();
         const end = query.end ? new Date(query.end) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
